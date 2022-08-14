@@ -1,0 +1,88 @@
+[gd_scene load_steps=13 format=3 uid="uid://cabd2skt08pby"]
+
+[ext_resource type="Texture2D" uid="uid://codbpjjxiiwij" path="res://polyhaven/stone_wall_diff_2k.jpg" id="1_2x4y1"]
+[ext_resource type="Texture2D" uid="uid://cwpuuf61raq3x" path="res://polyhaven/stone_wall_ao_2k.jpg" id="2_86oxt"]
+[ext_resource type="Texture2D" uid="uid://cxmdi1dljmmj4" path="res://polyhaven/stone_wall_nor_dx_2k.jpg" id="3_fchgi"]
+[ext_resource type="Texture2D" uid="uid://dr7ebaqrac70w" path="res://polyhaven/stone_wall_rough_2k.jpg" id="4_7wgux"]
+[ext_resource type="ArrayMesh" uid="uid://cepny0hauf6mx" path="res://complex.obj" id="5_sa8it"]
+[ext_resource type="Script" path="res://AnimationPlayer.gd" id="7_kcm88"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0y5jg"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_31ceb"]
+sky_material = SubResource("ProceduralSkyMaterial_0y5jg")
+
+[sub_resource type="Environment" id="Environment_s4g2m"]
+background_mode = 2
+sky = SubResource("Sky_31ceb")
+tonemap_mode = 3
+tonemap_white = 6.0
+glow_enabled = true
+volumetric_fog_density = 0.02
+volumetric_fog_gi_inject = 16.0
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r6cd3"]
+albedo_texture = ExtResource("1_2x4y1")
+roughness_texture = ExtResource("4_7wgux")
+normal_enabled = true
+normal_texture = ExtResource("3_fchgi")
+ao_enabled = true
+ao_texture = ExtResource("2_86oxt")
+uv1_scale = Vector3(0.25, 0.25, 0.25)
+uv1_triplanar = true
+texture_filter = 5
+
+[sub_resource type="Animation" id="Animation_h3osk"]
+resource_name = "move"
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_48o41"]
+_data = {
+"move": SubResource("Animation_h3osk")
+}
+
+[node name="Node3D" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_s4g2m")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+shadow_enabled = true
+directional_shadow_mode = 0
+directional_shadow_fade_start = 1.0
+directional_shadow_max_distance = 75.0
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -52, 0)
+material_override = SubResource("StandardMaterial3D_r6cd3")
+mesh = ExtResource("5_sa8it")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.0455668, 0.0748254, 0.996155, 0, 0.997191, -0.0749032, -0.998961, 0.0034131, 0.0454388, 11.4389, 4.64062, 9.84225)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.73006, 0, 7.53441)
+light_color = Color(1, 0.705882, 0.933333, 1)
+
+[node name="OmniLight3D2" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.67635, 2.93217, 19.3424)
+light_color = Color(1, 0.937255, 0.0313726, 1)
+
+[node name="OmniLight3D3" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.67635, 8.28003, 17.554)
+light_color = Color(0.658824, 1, 0.670588, 1)
+
+[node name="OmniLight3D4" type="OmniLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.2845, 7.3108, 19.7768)
+light_color = Color(0.447059, 0.576471, 1, 1)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "move"
+libraries = {
+"": SubResource("AnimationLibrary_48o41")
+}
+script = ExtResource("7_kcm88")
+
+[connection signal="animation_finished" from="AnimationPlayer" to="AnimationPlayer" method="_on_animation_player_animation_finished"]
