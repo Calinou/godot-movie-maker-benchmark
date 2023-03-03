@@ -1,7 +1,7 @@
 # Godot Movie Maker benchmark
 
-Performance comparison for Godot 4.0.alpha's [Movie Maker
-mode](https://docs.godotengine.org/en/latest/tutorials/animation/creating_movies.html),
+Performance comparison for Godot 4.0's
+[Movie Maker mode](https://docs.godotengine.org/en/latest/tutorials/animation/creating_movies.html),
 depending on the MJPEG quality chosen.
 
 ## Results
@@ -59,7 +59,7 @@ the [lossless reference image](output/reference.png).
 
 ## License
 
-Copyright © 2022 Hugo Locurcio and contributors
+Copyright © 2022-present Hugo Locurcio and contributors
 
 Unless otherwise specified, files in this repository are licensed under the
 MIT license. See [LICENSE.md](LICENSE.md) for more information.
